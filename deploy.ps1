@@ -23,3 +23,5 @@ az aks show --resource-group $resourceGroupName --name $clusterName --query kube
 kubectl autoscale deployment azure-vote-front --cpu-percent=50 --min=3 --max=10
 
 kubectl apply -f azure-vote-hpa.yaml
+
+kubectl get service azure-vote-front --watch
