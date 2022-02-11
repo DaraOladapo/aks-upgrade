@@ -1,10 +1,17 @@
-$getUpgrades = az aks get-upgrades --resource-group $resourceGroupName --name $clusterName --output table
-$getUpgrades
-$upgradeSteps = @("1.22.2", "1.22.4")
-
-foreach ($upgradeStep in $upgradeSteps) {
-    az aks upgrade --resource-group $resourceGroupName --name $clusterName --kubernetes-version $upgradeStep -y
+function Get-Upgrades{
+    $upgrades = az aks get-upgrades --resource-group $resourceGroupName --name $clusterName --query "controlPlaneProfile.upgrades" 
+    if($upgrades)
+    {
+        $upgradePaths= ($upgrades | findstr kubernetesVersion).Replace("kubernetesVersion", "").Replace(":", "").Replace('"','').Replace(" ", "")
+        return $upgradePaths
+    }
+    return $null
 }
-
-
-$getUpgrades
+$upgradePaths = Get-Upgrades
+while ($upgradePaths) {
+    foreach ($upgradePath in $upgradePaths) {
+        Write-Host "Upgrading to $upgradePath"
+        az aks upgrade --resource-group $resourceGroupName --name $clusterName --kubernetes-version $upgradePath -y
+    }
+}
+Write-Host "Upgrade complete"
