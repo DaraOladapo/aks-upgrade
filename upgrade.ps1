@@ -8,6 +8,8 @@ function Get-Upgrades{
     return $null
 }
 $upgradePaths = Get-Upgrades
+$lastUpgradeInPath = $upgradePaths.Last()
+Write-Host $lastUpgradeInPath
 while ($upgradePaths) {
     foreach ($upgradePath in $upgradePaths) {
         Write-Host "Upgrading to $upgradePath"
