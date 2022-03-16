@@ -4,7 +4,7 @@ az provider show -n Microsoft.OperationalInsights -o table
 
 az group create --name $resourceGroupName --location $location
 
-az aks create --resource-group $resourceGroupName --name $clusterName --kubernetes-version $oldVersionNumber --node-count 1 --enable-addons monitoring --generate-ssh-keys
+az aks create --resource-group $resourceGroupName --name $clusterName --kubernetes-version $oldVersionNumber --node-count 5 --enable-addons monitoring --generate-ssh-keys
 
 az aks install-cli
 

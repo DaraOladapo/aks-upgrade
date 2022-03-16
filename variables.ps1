@@ -1,6 +1,6 @@
 $prefix = "gwl"
 $resourceGroupName = "$prefix-aks-rg"
 $location = "westeurope"
-$clusterName = "$prefix-aks-duo-cluster"
+$clusterName = "$prefix-aks-cluster"
 $oldVersionNumber = "1.20.13"
 $maxVersionNumber="1.22.6"
