@@ -6,9 +6,9 @@ function Get-Upgrades {
     }
     return $null
 }
+Write-Host "$(Get-Date): Starting upgrade"
 $upgradePaths = Get-Upgrades
-$lastUpgradeInPath = $upgradePaths[-1]
-Write-Host $lastUpgradeInPath
+Write-Host "Upgrading on path $upgradePaths"
 while ($upgradePaths) {
     foreach ($upgradePath in $upgradePaths) {
         if ($upgradePath -eq $maxVersionNumber) {
@@ -16,9 +16,11 @@ while ($upgradePaths) {
             return
         }
         else {
-            Write-Host "Upgrading to $upgradePath"
+            
+            Write-Host "$(Get-Date): Upgrading to $upgradePath"
             az aks upgrade --resource-group $resourceGroupName --name $clusterName --kubernetes-version $upgradePath -y
+            $upgradePaths = Get-Upgrades
         }
     }
 }
-Write-Host "Upgrade complete"
+Write-Host "$(Get-Date): Upgrade complete"
