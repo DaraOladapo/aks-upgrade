@@ -16,7 +16,6 @@ while ($upgradePaths) {
             return
         }
         else {
-       
             Write-Host "Upgrading to $upgradePath"
             az aks upgrade --resource-group $resourceGroupName --name $clusterName --kubernetes-version $upgradePath -y
         }
